@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Applied Electromagnetics Lab (AEL) at Hongik University — metasurfaces for electromagnetic wave control from RF to optics, led by Prof. Minseok Kim.">
+<title>Applied Electromagnetics Lab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #FBFCFC;
+    --ink: #182530;
+    --muted: #56676F;
+    --line: #DDE5E7;
+    --card: #F2F6F6;
+    --accent: #0B7C8C;
+    --accent-soft: rgba(11,124,140,0.09);
+    --copper: #A9663B;
+    --wave: rgba(24,37,48,0.14);
+    --wave-strong: rgba(11,124,140,0.55);
+    --shadow: 0 1px 2px rgba(24,37,48,0.05), 0 8px 24px rgba(24,37,48,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0E1922;
+      --ink: #E6EDF0;
+      --muted: #93A6B0;
+      --line: #223440;
+      --card: #131F2A;
+      --accent: #41B9CA;
+      --accent-soft: rgba(65,185,202,0.12);
+      --copper: #D6926A;
+      --wave: rgba(230,237,240,0.12);
+      --wave-strong: rgba(65,185,202,0.6);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0E1922;
+    --ink: #E6EDF0;
+    --muted: #93A6B0;
+    --line: #223440;
+    --card: #131F2A;
+    --accent: #41B9CA;
+    --accent-soft: rgba(65,185,202,0.12);
+    --copper: #D6926A;
+    --wave: rgba(230,237,240,0.12);
+    --wave-strong: rgba(65,185,202,0.6);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .mono {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Nav / Tabs ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .navbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 24px; max-width: 1080px; margin: 0 auto; min-height: 58px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: baseline; gap: 10px; color: var(--ink); padding: 12px 0; }
+  .brand:hover { text-decoration: none; }
+  .brand .sig {
+    font-family: "STIX Two Text", Georgia, serif;
+    font-weight: 700; font-size: 1.25rem; letter-spacing: 0.01em;
+  }
+  .brand .sub { color: var(--muted); font-size: 0.78rem; font-weight: 500; }
+  nav.links { display: flex; gap: 4px; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+  nav.links::-webkit-scrollbar { display: none; }
+  nav.links a {
+    color: var(--muted); font-size: 0.85rem; font-weight: 600; white-space: nowrap;
+    padding: 17px 10px 15px; border-bottom: 2px solid transparent;
+  }
+  nav.links a:hover { color: var(--accent); text-decoration: none; }
+  nav.links a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---------- Page routing ---------- */
+  .js .page { display: none; }
+  .js .page.active { display: block; }
+
+  /* ---------- Hero (Home) ---------- */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero .inner { position: relative; padding: 96px 24px 72px; max-width: 1080px; margin: 0 auto; }
+  .hero .eyebrow { color: var(--accent); margin-bottom: 20px; display: block; }
+  .hero h1 {
+    font-family: "STIX Two Text", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    line-height: 1.14;
+    margin: 0 0 22px;
+    max-width: 17em;
+    text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero p.lede { max-width: 42em; color: var(--muted); font-size: 1.06rem; margin: 0 0 34px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 11px 22px; border-radius: 4px;
+    font-weight: 600; font-size: 0.92rem; border: 1px solid transparent; cursor: pointer;
+  }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { text-decoration: none; filter: brightness(1.08); }
+  .btn.ghost { border-color: var(--line); color: var(--ink); background: color-mix(in srgb, var(--paper) 70%, transparent); }
+  .btn.ghost:hover { text-decoration: none; border-color: var(--accent); color: var(--accent); }
+
+  .statbar { border-top: 1px solid var(--line); background: color-mix(in srgb, var(--card) 65%, transparent); position: relative; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .stat { background: var(--paper); padding: 20px 22px; }
+  .stat b { display: block; font-family: "STIX Two Text", Georgia, serif; font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 0.82rem; }
+  .venues {
+    display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+    padding: 14px 22px; background: var(--paper);
+    border: 1px solid var(--line); border-top: none;
+  }
+  .venues .vlabel { color: var(--copper); flex: none; }
+  .venues .vnames {
+    font-family: "STIX Two Text", Georgia, serif; font-style: italic;
+    font-size: 0.95rem; color: var(--muted);
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 72px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin-bottom: 40px; flex-wrap: wrap; }
+  .sec-head .eyebrow { color: var(--accent); display: block; margin-bottom: 10px; }
+  .sec-head h2 {
+    font-family: "STIX Two Text", Georgia, serif;
+    font-weight: 600; font-size: 1.9rem; line-height: 1.2; margin: 0;
+    text-wrap: balance;
+  }
+  .sec-head .note { color: var(--muted); font-size: 0.88rem; max-width: 26em; }
+
+  /* Research */
+  .rgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .rcard {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 12px;
+    transition: border-color 0.2s ease;
+  }
+  .rcard:hover { border-color: var(--accent); }
+  .rcard .band { color: var(--copper); }
+  .rcard h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.18rem; font-weight: 600; margin: 0; line-height: 1.3; }
+  .rcard p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+  /* Publications */
+  .pub-group { margin-bottom: 40px; }
+  .pub-group h3.gtitle { font-family: "STIX Two Text", Georgia, serif; font-size: 1.25rem; font-weight: 600; margin: 0 0 8px; }
+  .plist { display: flex; flex-direction: column; }
+  .pub {
+    display: grid; grid-template-columns: 64px 1fr; gap: 20px;
+    padding: 18px 4px; border-bottom: 1px solid var(--line);
+  }
+  .pub:first-child { border-top: 1px solid var(--line); }
+  .pub .yr { font-family: "IBM Plex Mono", monospace; color: var(--muted); font-size: 0.85rem; padding-top: 3px; font-variant-numeric: tabular-nums; }
+  .pub h3 { font-size: 0.98rem; font-weight: 600; margin: 0 0 4px; line-height: 1.45; }
+  .pub .meta { font-size: 0.86rem; color: var(--muted); }
+  .pub .meta .venue { color: var(--copper); font-weight: 600; }
+  .pub .tag {
+    display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 99px;
+    background: var(--accent-soft); color: var(--accent);
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; vertical-align: 1px;
+  }
+
+  /* News */
+  .news { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--line); }
+  .nitem { position: relative; padding: 0 0 30px 30px; }
+  .nitem:last-child { padding-bottom: 4px; }
+  .nitem::before {
+    content: ""; position: absolute; left: -6px; top: 7px;
+    width: 10px; height: 10px; border-radius: 99px;
+    background: var(--paper); border: 2px solid var(--accent);
+  }
+  .nitem .date { color: var(--muted); display: block; margin-bottom: 6px; }
+  .nitem p { margin: 0; max-width: 52em; }
+  .nitem p b { font-weight: 600; }
+
+  /* Team */
+  .pi {
+    display: grid; grid-template-columns: 200px 1fr; gap: 34px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 32px; margin-bottom: 26px;
+  }
+  .pi .portrait {
+    aspect-ratio: 1; border-radius: 6px; background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "STIX Two Text", Georgia, serif; font-size: 3rem; font-weight: 700; color: var(--accent);
+    border: 1px solid var(--line);
+  }
+  .pi h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.5rem; font-weight: 600; margin: 0 0 2px; }
+  .pi .role { color: var(--accent); font-weight: 600; font-size: 0.92rem; margin-bottom: 14px; }
+  .pi .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 6px 28px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 0.9rem; color: var(--muted); }
+  .pi .facts li b { color: var(--ink); font-weight: 600; }
+  .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .member {
+    border: 1px solid var(--line); border-radius: 6px; padding: 20px;
+    display: flex; gap: 14px; align-items: flex-start; background: var(--paper);
+  }
+  .member .avatar {
+    flex: none; width: 44px; height: 44px; border-radius: 99px;
+    background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;
+  }
+  .member h4 { margin: 0; font-size: 0.98rem; font-weight: 600; }
+  .member .deg { color: var(--copper); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.03em; }
+  .member p { margin: 6px 0 0; color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+
+  /* Photos */
+  .album { margin-bottom: 46px; }
+  .album:last-child { margin-bottom: 0; }
+  .album .ahead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+  .album h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.25rem; font-weight: 600; margin: 0; }
+  .album .where { color: var(--muted); }
+  .album .cap { color: var(--muted); font-size: 0.88rem; margin: 0 0 16px; max-width: 52em; }
+  .album .cap b { color: var(--ink); font-weight: 600; }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .ph {
+    aspect-ratio: 4 / 3; border-radius: 4px;
+    border: 1px dashed var(--line);
+    background: repeating-linear-gradient(45deg, var(--card), var(--card) 9px, var(--paper) 9px, var(--paper) 18px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+  }
+  .ph.more { border-style: solid; background: var(--card); font-family: "STIX Two Text", Georgia, serif; font-size: 1.2rem; font-weight: 600; }
+  .ph-note {
+    margin-top: 34px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--accent-soft); color: var(--muted); font-size: 0.86rem;
+  }
+
+  /* Teaching */
+  .courses { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .crow { display: grid; grid-template-columns: 150px 1fr; }
+  .crow + .crow { border-top: 1px solid var(--line); }
+  .crow .sem { padding: 16px 20px; background: var(--card); color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; }
+  .crow ul { margin: 0; padding: 14px 20px; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; }
+  .crow li { font-size: 0.9rem; }
+  .crow li span { color: var(--muted); font-size: 0.8rem; }
+
+  /* Openings */
+  .openbox { max-width: 760px; }
+  .openbox h2 { font-family: "STIX Two Text", Georgia, serif; font-weight: 600; font-size: 1.9rem; margin: 0 0 16px; text-wrap: balance; }
+  .openbox p { color: var(--muted); margin: 0 0 12px; max-width: 46em; }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .ccard { border: 1px solid var(--line); border-radius: 6px; padding: 26px; background: var(--card); }
+  .ccard h3 { margin: 0 0 10px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .ccard p { margin: 0; font-size: 0.95rem; }
+  .ccard p b { font-weight: 600; }
+  .ccard .big { font-family: "STIX Two Text", Georgia, serif; font-size: 1.15rem; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: 0.82rem; }
+
+  @media (max-width: 720px) {
+    .pi { grid-template-columns: 1fr; }
+    .pi .portrait { max-width: 160px; }
+    .pub { grid-template-columns: 56px 1fr; gap: 14px; }
+    section { padding: 52px 0; }
+    .hero .inner { padding-top: 64px; padding-bottom: 52px; }
+    .navbar { padding-bottom: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="navbar">
+    <a class="brand" href="#home">
+      <span class="sig">AEL</span>
+      <span class="sub">Applied Electromagnetics Lab · Hongik University</span>
+    </a>
+    <nav class="links" aria-label="Site pages">
+      <a href="#home" data-tab="home">Home</a>
+      <a href="#research" data-tab="research">Research</a>
+      <a href="#publications" data-tab="publications">Publications</a>
+      <a href="#team" data-tab="team">Team</a>
+      <a href="#photos" data-tab="photos">Photos</a>
+      <a href="#teaching" data-tab="teaching">Teaching</a>
+      <a href="#openings" data-tab="openings">Openings</a>
+      <a href="#contact" data-tab="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main class="page" id="page-home">
+  <div class="hero">
+    <canvas id="wavefield" aria-hidden="true"></canvas>
+    <div class="inner">
+      <span class="mono eyebrow">Metasurfaces · RF → THz → Optics</span>
+      <h1>Unlocking the potential of electromagnetic phenomena, <em>from RF to optics</em>.</h1>
+      <p class="lede">We manipulate electromagnetic waves at will using metasurfaces — ultrathin artificial electromagnetic surfaces that sculpt fields with sub-wavelength precision — for next-generation 6G communications, satellite links, terahertz systems, and high-resolution imaging.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#openings">Join the lab</a>
+        <a class="btn ghost" href="#publications">Publications</a>
+      </div>
+    </div>
+    <div class="statbar">
+      <div class="wrap" style="padding-top:0;padding-bottom:0;">
+        <div class="stats">
+          <div class="stat"><b>21</b><span>SCIE journal articles</span></div>
+          <div class="stat"><b>2024</b><span>NRF Young Investigator Award</span></div>
+        </div>
+        <div class="venues">
+          <span class="mono vlabel">As published in</span>
+          <span class="vnames">Physical Review X&ensp;·&ensp;Physical Review Applied&ensp;·&ensp;IEEE Trans. Antennas Propag.&ensp;·&ensp;Optica&ensp;·&ensp;Optics Express</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">News</span>
+          <h2>Recent highlights</h2>
+        </div>
+      </div>
+      <div class="news">
+        <div class="nitem">
+          <span class="mono date">2026 · 08 · 25</span>
+          <p><b>Moosung Kim</b>'s work on a dual-band RIS built from interleaved, frequency-decoupled sub-cells — enabling independent nonlocal beam synthesis across bands — is accepted to <b>IEEE Transactions on Antennas and Propagation</b>.</p>
+        </div>
+        <div class="nitem">
+          <span class="mono date">2026 · 06 · 11</span>
+          <p><b>Seokjun Kim</b> and <b>Haneul Yoo</b>'s work integrating nonlocal THz metasurfaces into a leaky-wave antenna architecture — addressing gain reduction during beam steering — is accepted to <b>Physical Review Applied</b>.</p>
+        </div>
+        <div class="nitem">
+          <span class="mono date">2026 · 06 · 03</span>
+          <p>AEL presents <b>four papers</b> at the 2026 IEEE AP-S/URSI Symposium. <b>Minwoo Cho</b> is a Top-10 finalist in the Industry Application Pitch Competition, and <b>Jinyong Kim</b> receives an Honorable Mention in the Student Paper Competition.</p>
+        </div>
+        <div class="nitem">
+          <span class="mono date">2025 · 07 · 28</span>
+          <p>Two papers accepted — a dual-band, dual-polarized RIS in <b>Electronics</b>, and a Huygens' metasurface-aided waveguide in <b>IEEE Microwave and Wireless Technology Letters</b>.</p>
+        </div>
+        <div class="nitem">
+          <span class="mono date">2025 · 04 · 30</span>
+          <p>Collaborative work with the <b>University of Toronto</b> on a highly efficient, dual-polarized Huygens' metasurface — doubling the scan range of phased-array antennas — is published in <b>IEEE Access</b>.</p>
+        </div>
+        <div class="nitem">
+          <span class="mono date">2025 · 01 · 14</span>
+          <p>Research on full-space beam steering with cavity-excited impedance surfaces, achieving near-perfect aperture efficiencies, is accepted to <b>Physical Review Applied</b>.</p>
+        </div>
+        <div class="nitem">
+          <span class="mono date">2024 · 01 · 19</span>
+          <p>The lab's first paper — combining nonlinear optics with metasurface-assisted antennas for simultaneous THz generation and manipulation — is accepted to <b>Optics Express</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= RESEARCH ================= -->
+<main class="page" id="page-research">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">Research</span>
+          <h2>Wave control as a design problem</h2>
+        </div>
+        <p class="note">Our work spans microwave, millimeter-wave, terahertz, and optical regimes — treating mutual coupling and nonlocality not as nuisances, but as engineering resources.</p>
+      </div>
+      <div class="rgrid">
+        <div class="rcard">
+          <span class="mono band">Multi-band · RIS</span>
+          <h3>Nonlocal multi-band reconfigurable intelligent surfaces</h3>
+          <p>Frequency-selective structures interleaved on a single thin surface manipulate signals across multiple bands simultaneously — deliberately exploiting mutual coupling among unit cells as a design element for full half-space beam shaping.</p>
+        </div>
+        <div class="rcard">
+          <span class="mono band">Microwave · 6G</span>
+          <h3>Cavity-excited nonlocal metasurface antennas</h3>
+          <p>Resonant fields confined within a cavity excite a metasurface aperture directly, eliminating extensive feed networks while maintaining directive radiation — a compact, power-efficient platform for 6G front ends.</p>
+        </div>
+        <div class="rcard">
+          <span class="mono band">mm-wave · Radar</span>
+          <h3>Spatially-dispersive metasurfaces and metagratings</h3>
+          <p>Sparsely distributed metallic scatterers with wavelength-scale spacing yield angle-selective wave manipulation, targeting automotive radar and 6G links where the angular response is the specification.</p>
+        </div>
+        <div class="rcard">
+          <span class="mono band">THz</span>
+          <h3>Nonlocal metasurface-aided THz leaky-wave antennas</h3>
+          <p>Metasurfaces that remain robust over a broad range of incidence angles enable efficient, stable beam steering at terahertz frequencies — including simultaneous generation and manipulation of THz waves via nonlinear optics.</p>
+        </div>
+        <div class="rcard">
+          <span class="mono band">Computational</span>
+          <h3>Deep-learning-assisted inverse design</h3>
+          <p>Physics-aware inverse-design frameworks that explicitly account for mutual coupling accelerate metasurface synthesis, closing the loop between full-wave physics and AI-driven optimization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= PUBLICATIONS ================= -->
+<main class="page" id="page-publications">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">Publications</span>
+          <h2>Selected publications</h2>
+        </div>
+        <p class="note">An asterisk (*) denotes the corresponding author.</p>
+      </div>
+
+      <div class="pub-group">
+        <h3 class="gtitle">In press &amp; under review</h3>
+        <div class="plist">
+          <div class="pub">
+            <div class="yr">2026</div>
+            <div>
+              <h3>Guided-mode-excited non-local metasurfaces: engineering angular response for stable beam-steering in terahertz leaky-wave antennas</h3>
+              <div class="meta">S. Kim, H. Yoo, and M. Kim* — <span class="venue">Physical Review Applied</span><span class="tag">Accepted</span></div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2026</div>
+            <div>
+              <h3>Dual-band nonlocal reconfigurable intelligent surfaces for precise full half-space beam shaping</h3>
+              <div class="meta">M. Kim and M. Kim* — <span class="venue">IEEE Trans. Antennas Propag.</span><span class="tag">Under revision</span></div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2026</div>
+            <div>
+              <h3>Loss-optimized reconfigurable nonlocal metasurface-aided cavity antenna</h3>
+              <div class="meta">M. Cho and M. Kim* — <span class="venue">IEEE Trans. Antennas Propag.</span><span class="tag">Under review</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-group">
+        <h3 class="gtitle">Journal articles</h3>
+        <div class="plist">
+          <div class="pub">
+            <div class="yr">2025</div>
+            <div>
+              <h3>Huygens' meta-waveguide with arbitrarily reduced cutoff frequency</h3>
+              <div class="meta">Y. Nam, J. H. Lee*, and M. Kim* — <span class="venue">IEEE Microw. Wirel. Technol. Lett.</span>, Jul. 2025</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2025</div>
+            <div>
+              <h3>Reconfigurable intelligent surfaces with dual-band dual-polarization capabilities for arbitrary beam synthesis beyond beam steering</h3>
+              <div class="meta">M. Kim, G. Lee, and M. Kim* — <span class="venue">Electronics</span>, Jul. 2025</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2025</div>
+            <div>
+              <h3>Highly-efficient, dual-polarized Huygens' metasurfaces for scan-angle enhancement without directivity degradation</h3>
+              <div class="meta">J. Kim, M. Soltani, M. Kim, and G. V. Eleftheriades* — <span class="venue">IEEE Access</span>, Apr. 2025</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2025</div>
+            <div>
+              <h3>Cavity-excited impedance surfaces for full-space beam steering via combination of integral equations and baffles</h3>
+              <div class="meta">M. Kim* — <span class="venue">Physical Review Applied</span> 23, 024011, Feb. 2025</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2024</div>
+            <div>
+              <h3>Simultaneous generation and manipulation of terahertz waves based on nonlinear leaky-waveguide antennas with integrated bianisotropic metasurfaces</h3>
+              <div class="meta">D. Upcraft, S. Oh, and M. Kim* — <span class="venue">Optics Express</span> 32, 5837–5850, Feb. 2024</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2022</div>
+            <div>
+              <h3>Static and reconfigurable Huygens' metasurfaces: use in antenna beamforming and beam steering</h3>
+              <div class="meta">V. G. Ataloglou, G. Egorov, J. Kim, G. Xu, A. H. Dorrah, A. Ohadi, M. Kim, and G. V. Eleftheriades* — <span class="venue">IEEE Antennas Propag. Mag.</span> 64(4), 73–84, Aug. 2022</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2022</div>
+            <div>
+              <h3>Prospects of Huygens' metasurfaces for antenna applications</h3>
+              <div class="meta">G. V. Eleftheriades*, M. Kim, V. G. Ataloglou, and A. H. Dorrah — <span class="venue">Engineering</span> 11, 21–26, 2022</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2021</div>
+            <div>
+              <h3>Guided-wave-excited binary Huygens' metasurfaces for dynamic beamforming</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades* — <span class="venue">IEEE Antennas Wirel. Propag. Lett.</span> 20(12), 2324–2328, Dec. 2021</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2021</div>
+            <div>
+              <h3>Guided-wave-excited binary Huygens' metasurfaces for dynamic radiated beam shaping with independent gain and scan angle control</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades* — <span class="venue">Physical Review Applied</span> 15, 054037, May 2021</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2021</div>
+            <div>
+              <h3>Microwave Huygens' metasurfaces: fundamentals and applications</h3>
+              <div class="meta">V. G. Ataloglou, M. Chen, M. Kim, and G. V. Eleftheriades* — <span class="venue">IEEE J. Microwaves</span> 1(1), 374–388, Jan. 2021</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2020</div>
+            <div>
+              <h3>Optically and radio frequency (RF) transparent meta-glass</h3>
+              <div class="meta">M. Safari, Y. He, M. Kim, N. P. Kherani, and G. V. Eleftheriades* — <span class="venue">Nanophotonics</span> 9(12), Jun. 2020</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2020</div>
+            <div>
+              <h3>Design and experimental demonstration of an impedance-matched circular polarization selective surface with spin-selective phase modulations</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades* — <span class="venue">Physical Review Applied</span> 13, 014009, Jan. 2020</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2018</div>
+            <div>
+              <h3>Huygens' metasurfaces from microwaves to optics: a review</h3>
+              <div class="meta">M. Chen, M. Kim, A. M. H. Wong, and G. V. Eleftheriades* — <span class="venue">Nanophotonics</span>, Apr. 2018</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2018</div>
+            <div>
+              <h3>Design and demonstration of impedance-matched dual-band chiral metasurfaces</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades* — <span class="venue">Scientific Reports</span> 8, 3449, Feb. 2018</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2017</div>
+            <div>
+              <h3>Superresolution far-field imaging of complex objects using reduced superoscillating ripples</h3>
+              <div class="meta">X. H. Dong, A. M. H. Wong, M. Kim, and G. V. Eleftheriades* — <span class="venue">Optica</span> 4(9), 1126–1133, Sep. 2017</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2016</div>
+            <div>
+              <h3>Highly efficient all-dielectric optical tensor impedance metasurfaces for chiral polarization control</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades* — <span class="venue">Optics Letters</span> 41, 4831–4834, Oct. 2016</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2016</div>
+            <div>
+              <h3>Vanadium-dioxide-assisted digital optical metasurfaces for dynamic wavefront engineering</h3>
+              <div class="meta">M. Kim, J. Jeong, J. K. S. Poon, and G. V. Eleftheriades* — <span class="venue">J. Opt. Soc. Am. B</span> 33, 980–988, Apr. 2016</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2015</div>
+            <div>
+              <h3>Two polarization-entangled sources from the same semiconductor chip</h3>
+              <div class="meta">D. Kang, M. Kim, H. He, and A. S. Helmy* — <span class="venue">Physical Review A</span> 92, 013821, Jul. 2015</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2014</div>
+            <div>
+              <h3>Optical Huygens' metasurfaces with independent control of the magnitude and phase of the local reflection coefficients</h3>
+              <div class="meta">M. Kim, A. M. H. Wong, and G. V. Eleftheriades* — <span class="venue">Physical Review X</span> 4, 041042, Dec. 2014</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-group">
+        <h3 class="gtitle">Conference proceedings</h3>
+        <div class="plist">
+          <div class="pub">
+            <div class="yr">2022</div>
+            <div>
+              <h3>Huygens' metasurfaces for antenna beamforming and beamsteering</h3>
+              <div class="meta">V. G. Ataloglou, M. Kim, and G. V. Eleftheriades — <span class="venue">EuCAP 2022</span>, pp. 1–5</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2021</div>
+            <div>
+              <h3>Static and dynamic beamforming with Huygens' metasurface antennas</h3>
+              <div class="meta">V. G. Ataloglou, M. Kim, and G. V. Eleftheriades — <span class="venue">IEEE AP-S/URSI 2021</span>, pp. 1507–1508</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2020</div>
+            <div>
+              <h3>A fixed-frequency reconfigurable holographic leaky-wave antenna for dynamically-controlled radiation patterns</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades — <span class="venue">Metamaterials 2020</span>, New York, NY</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2020</div>
+            <div>
+              <h3>Huygens'-metasurface-assisted reconfigurable leaky-wave antennas with dynamically-controlled radiation patterns</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades — <span class="venue">Metamaterials 2020</span>, New York, NY</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2020</div>
+            <div>
+              <h3>Reconfigurable leaky-wave antennas with independent control of the leakage constant and radiation angle</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades — <span class="venue">EuCAP 2020</span>, Copenhagen, Denmark (invited)</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2019</div>
+            <div>
+              <h3>Impedance-matched circular polarization selective surfaces with spin-selective phase modulation</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades — <span class="venue">IEEE AP-S/URSI 2019</span>, Atlanta, GA</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2017</div>
+            <div>
+              <h3>Dual-band chiral metasurfaces</h3>
+              <div class="meta">M. Kim and G. V. Eleftheriades — <span class="venue">IEEE AP-S/URSI 2017</span>, San Diego, CA, pp. 1491–1492</div>
+            </div>
+          </div>
+          <div class="pub">
+            <div class="yr">2015</div>
+            <div>
+              <h3>Entanglement diversity in monolithic waveguides</h3>
+              <div class="meta">D. Kang, M. Kim, H. He, and A. S. Helmy — <span class="venue">CLEO 2015</span>, paper JW2A.2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= TEAM ================= -->
+<main class="page" id="page-team">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">Team</span>
+          <h2>People</h2>
+        </div>
+      </div>
+      <div class="pi">
+        <div class="portrait">MK</div>
+        <div>
+          <h3>Minseok Kim</h3>
+          <div class="role">Principal Investigator · Assistant Professor</div>
+          <p style="margin:0;color:var(--muted);font-size:0.95rem;max-width:44em;">School of Electronic and Electrical Engineering, Hongik University. Ph.D., M.A.Sc., and B.A.Sc. in Electrical Engineering, University of Toronto.</p>
+          <ul class="facts">
+            <li><b>2023–</b> Assistant Professor, Hongik University</li>
+            <li><b>2021–2023</b> Assistant Professor, University of North Dakota</li>
+            <li><b>2019–2021</b> Postdoctoral Fellow, University of Toronto</li>
+            <li><b>Office</b> P-dong #614 · minseok.kim@hongik.ac.kr</li>
+          </ul>
+        </div>
+      </div>
+      <div class="members">
+        <div class="member">
+          <div class="avatar">SC</div>
+          <div><h4>Sambong Chang</h4><span class="deg">PH.D. CANDIDATE</span><p>Bianisotropic metasurfaces, nonlocal metasurfaces</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">MK</div>
+          <div><h4>Moosung Kim</h4><span class="deg">M.S.–PH.D. JOINT</span><p>Reconfigurable intelligent surfaces, space-time-coding metasurfaces</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">MC</div>
+          <div><h4>Minwoo Cho</h4><span class="deg">M.S.–PH.D. JOINT</span><p>Tunable metasurfaces, nonlocal metasurfaces</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">JK</div>
+          <div><h4>Jinyong Kim</h4><span class="deg">M.S.–PH.D. JOINT</span><p>Spatially-dispersive metasurfaces, multifunctional metasurfaces</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">SK</div>
+          <div><h4>Seokjun Kim</h4><span class="deg">M.S.–PH.D. JOINT</span><p>THz leaky-wave antennas, nonlocal metasurfaces, nonlinear optics</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">GJ</div>
+          <div><h4>Geun-Yung Jeon</h4><span class="deg">M.S. CANDIDATE</span><p>Deep-learning-based radiation-pattern synthesis, nonlocal metasurfaces</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">HY</div>
+          <div><h4>Haneul Yoo</h4><span class="deg">M.S. CANDIDATE</span><p>THz leaky-wave antennas, nonlocal metasurfaces, nonlinear optics</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar">DY</div>
+          <div><h4>Dongyun Yoon</h4><span class="deg">UNDERGRADUATE RA</span><p>Metasurface antennas</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= PHOTOS ================= -->
+<main class="page" id="page-photos">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">Photos</span>
+          <h2>Life at AEL</h2>
+        </div>
+        <p class="note">Conferences, awards, and everything in between.</p>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>IEEE AP-S/URSI 2026</h3><span class="mono where">Detroit, USA · Jul 2026</span></div>
+        <p class="cap"><b>Minwoo Cho</b> — Industry Application Pitch Competition Top-10 Finalist. <b>Jinyong Kim</b> — Student Paper Competition Honorable Mention. 판사님, 저희는 구경만 하였습니다.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+5</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>KIEES Summer Conference 2026</h3><span class="mono where">Alpensia, PyeongChang</span></div>
+        <p class="cap">Student presentations across five papers.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+1</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>IEEE AP-S/URSI 2025</h3><span class="mono where">Ottawa, Canada</span></div>
+        <p class="cap">Presentations, group photos, and dormitory pasta.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+7</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>EuCAP 2025</h3><span class="mono where">Stockholm, Sweden</span></div>
+        <p class="cap">Conference sessions and a bit of Stockholm.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+3</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>KIEES Winter Conference 2025</h3><span class="mono where">ICC Jeju</span></div>
+        <p class="cap">Award ceremony and a lab bowling night.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+3</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>IEEE AP-S/URSI 2024</h3><span class="mono where">Florence, Italy</span></div>
+        <p class="cap">Reunions with former advisors, and the Duomo.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>KIEES Summer Conference 2024</h3><span class="mono where">PyeongChang</span></div>
+        <p class="cap">Presentation snapshots.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>KIEES Winter Conference 2024</h3><span class="mono where">Jeju</span></div>
+        <p class="cap">Sessions and social hours.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+1</div>
+        </div>
+      </div>
+
+      <div class="album">
+        <div class="ahead"><h3>Tico</h3><span class="mono where">Lab Mascot</span></div>
+        <p class="cap">Chief morale officer.</p>
+        <div class="pgrid">
+          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div>
+        </div>
+      </div>
+
+      <div class="ph-note">Our photo albums are being migrated to this page. In the meantime, the full collection is available on our <a href="https://sites.google.com/hongik.ac.kr/ael/photos" target="_blank" rel="noopener">previous site</a>.</div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= TEACHING ================= -->
+<main class="page" id="page-teaching">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">Teaching</span>
+          <h2>Courses</h2>
+        </div>
+      </div>
+      <div class="courses">
+        <div class="crow">
+          <div class="sem">2025 SPRING</div>
+          <ul>
+            <li>Introduction to Electromagnetics <span>전자기학</span></li>
+            <li>Microwave Engineering I <span>마이크로파공학(1)</span></li>
+            <li>IT Systems Capstone Design <span>IT시스템종합설계</span></li>
+          </ul>
+        </div>
+        <div class="crow">
+          <div class="sem">2024 FALL</div>
+          <ul>
+            <li>Microwave and Antenna Engineering <span>전파및안테나공학</span></li>
+            <li>Microwave Devices <span>마이크로파소자</span></li>
+            <li>IT Systems Capstone Design <span>IT시스템종합설계</span></li>
+          </ul>
+        </div>
+        <div class="crow">
+          <div class="sem">2024 SPRING</div>
+          <ul>
+            <li>Introduction to Electromagnetics <span>전자기학</span></li>
+            <li>Fundamentals of Digital Logic <span>디지털논리회로</span></li>
+            <li>IT Systems Capstone Design <span>IT시스템종합설계</span></li>
+          </ul>
+        </div>
+        <div class="crow">
+          <div class="sem">2023 FALL</div>
+          <ul>
+            <li>Introduction to Entrepreneurial IoT Design</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= OPENINGS ================= -->
+<main class="page" id="page-openings">
+  <section>
+    <div class="wrap">
+      <div class="openbox">
+        <span class="mono eyebrow" style="color:var(--accent);display:block;margin-bottom:14px;">Openings</span>
+        <h2>We are always looking for excellent and motivated students.</h2>
+        <p>Graduate positions — including for international applicants — are open for candidates interested in microwaves, terahertz technology, and optics. Undergraduate research positions are available for 3rd-year students and above.</p>
+        <p style="margin-bottom:26px;">To apply or ask a question, write to <a href="mailto:minseok.kim@hongik.ac.kr">minseok.kim@hongik.ac.kr</a> with your CV and transcript.</p>
+        <a class="btn primary" href="mailto:minseok.kim@hongik.ac.kr">Get in touch</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= CONTACT ================= -->
+<main class="page" id="page-contact">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="mono eyebrow">Contact</span>
+          <h2>Get in touch</h2>
+        </div>
+        <p class="note">학부연구생 및 대학원 진학 문의는 이메일로 연락 바랍니다.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="ccard">
+          <h3>Email</h3>
+          <p class="big"><a href="mailto:minseok.kim@hongik.ac.kr">minseok.kim@hongik.ac.kr</a></p>
+        </div>
+        <div class="ccard">
+          <h3>Phone</h3>
+          <p class="big">+82-2-320-1643</p>
+        </div>
+        <div class="ccard">
+          <h3>Office</h3>
+          <p><b>P-dong, Room #614</b><br>School of Electronic and Electrical Engineering<br>Hongik University, Seoul</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <span>© 2026 Applied Electromagnetics Lab, Hongik University</span>
+      <span class="mono" style="letter-spacing:0.08em;">Last updated · Aug 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+
+  /* ---------- Tab routing ---------- */
+  var pages = document.querySelectorAll('.page');
+  var tabs = document.querySelectorAll('nav.links a');
+  var PAGES = ['home','research','publications','team','photos','teaching','openings','contact'];
+
+  function route() {
+    var h = (location.hash || '#home').replace('#', '');
+    if (PAGES.indexOf(h) === -1) h = 'home';
+    pages.forEach(function (p) {
+      p.classList.toggle('active', p.id === 'page-' + h);
+    });
+    tabs.forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-tab') === h);
+    });
+    window.scrollTo(0, 0);
+    if (h === 'home' && window.__aelResize) window.__aelResize();
+  }
+  window.addEventListener('hashchange', route);
+  route();
+
+  /* ---------- Hero wavefield ---------- */
+  var canvas = document.getElementById('wavefield');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var phase = 0, raf = null;
+
+  function tokens() {
+    var s = getComputedStyle(document.documentElement);
+    return {
+      wave: s.getPropertyValue('--wave').trim() || 'rgba(24,37,48,0.14)',
+      strong: s.getPropertyValue('--wave-strong').trim() || 'rgba(11,124,140,0.55)',
+      copper: s.getPropertyValue('--copper').trim() || '#A9663B'
+    };
+  }
+
+  function resize() {
+    var r = canvas.parentElement.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = r.width * dpr;
+    canvas.height = r.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  window.__aelResize = resize;
+
+  function draw() {
+    var w = canvas.clientWidth || canvas.parentElement.clientWidth;
+    var h = canvas.clientHeight || canvas.parentElement.clientHeight;
+    if (!w || !h) return;
+    var t = tokens();
+    ctx.clearRect(0, 0, w, h);
+
+    var sx = w * 0.72;                 // metasurface x-position
+    var lam = 34;                      // wavelength (px)
+    var steer = -24 * Math.PI / 180;   // transmitted steering angle
+
+    // incident plane wavefronts
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = t.wave;
+    for (var x = sx - lam + (phase % lam); x > -lam; x -= lam) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+    }
+
+    // transmitted wavefronts, tilted by the phase gradient
+    var nx = Math.cos(steer), ny = Math.sin(steer);
+    ctx.strokeStyle = t.strong;
+    ctx.lineWidth = 1;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(sx, 0, w - sx, h);
+    ctx.clip();
+    var diag = Math.hypot(w - sx, h);
+    for (var d = (phase % lam); d < diag + lam; d += lam) {
+      var cx = sx + nx * d, cy = h * 0.5 + ny * d;
+      var px = -ny, py = nx;
+      ctx.globalAlpha = Math.max(0, 0.9 - d / diag);
+      ctx.beginPath();
+      ctx.moveTo(cx - px * diag, cy - py * diag);
+      ctx.lineTo(cx + px * diag, cy + py * diag);
+      ctx.stroke();
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+
+    // copper unit-cell ticks along the surface
+    ctx.strokeStyle = t.copper;
+    ctx.lineWidth = 2;
+    var cell = 14;
+    for (var y = 6; y < h - 4; y += cell) {
+      ctx.beginPath();
+      ctx.moveTo(sx, y);
+      ctx.lineTo(sx, y + cell * 0.55);
+      ctx.stroke();
+    }
+  }
+
+  function tick() {
+    phase += 0.25;
+    draw();
+    raf = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (raf) cancelAnimationFrame(raf);
+    if (reduced.matches) { draw(); return; }
+    raf = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', resize);
+  if (reduced.addEventListener) reduced.addEventListener('change', start);
+  var scheme = window.matchMedia('(prefers-color-scheme: dark)');
+  if (scheme.addEventListener) scheme.addEventListener('change', function () { draw(); });
+  resize();
+  start();
+})();
+</script>
+</body>
+</html>
