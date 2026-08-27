@@ -75,7 +75,7 @@
   /* ---------- Hero (Home) ---------- */
   .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
   .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .hero .inner { position: relative; padding: 96px 24px 72px; max-width: 1080px; margin: 0 auto; }
+  .hero .inner { position: relative; padding: 52px 24px 40px; max-width: 1080px; margin: 0 auto; }
   .hero .eyebrow { color: var(--accent); margin-bottom: 20px; display: block; }
   .hero h1 {
     font-family: "STIX Two Text", Georgia, serif;
@@ -190,22 +190,23 @@
   .member img.avatar { object-fit: cover; border: 1px solid var(--line); }
   .pi h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.5rem; font-weight: 600; margin: 0 0 2px; }
   .pi .role { color: var(--accent); font-weight: 600; font-size: 0.92rem; margin-bottom: 14px; }
-  .pi .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 6px 28px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 0.9rem; color: var(--muted); }
+  .pi .facts { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; font-size: 0.9rem; color: var(--muted); }
   .pi .facts li b { color: var(--ink); font-weight: 600; }
-  .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .pi-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px 36px; margin-top: 16px; }
+  .pi-cols h4 { margin: 0 0 8px; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+  .pi-office { margin: 16px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr)); gap: 18px; }
   .member {
-    border: 1px solid var(--line); border-radius: 6px; padding: 20px;
-    display: flex; gap: 14px; align-items: flex-start; background: var(--paper);
+    border: 1px solid var(--line); border-radius: 6px; padding: 22px;
+    display: flex; gap: 20px; align-items: flex-start; background: var(--paper);
   }
   .member .avatar {
-    flex: none; width: 44px; height: 44px; border-radius: 99px;
-    background: var(--accent-soft); color: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;
+    flex: none; width: 118px; height: 150px; border-radius: 8px;
+    background: var(--accent-soft); object-fit: cover;
   }
-  .member h4 { margin: 0; font-size: 0.98rem; font-weight: 600; }
-  .member .deg { color: var(--copper); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.03em; }
-  .member p { margin: 6px 0 0; color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+  .member h4 { margin: 0; font-size: 1.08rem; font-weight: 600; }
+  .member .deg { color: var(--copper); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.03em; }
+  .member p { margin: 8px 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
 
   /* Photos */
   .album { margin-bottom: 46px; }
@@ -213,14 +214,14 @@
   .album .ahead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
   .album h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.25rem; font-weight: 600; margin: 0; }
   .album .where { color: var(--muted); }
-  .album .cap { color: var(--muted); font-size: 0.88rem; margin: 0 0 16px; max-width: 52em; }
+  .album .cap { color: var(--muted); font-size: 1.02rem; line-height: 1.6; margin: 2px 0 18px; max-width: 52em; }
   .album .cap b { color: var(--ink); font-weight: 600; }
-  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px 14px; align-items: start; }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 26px 20px; align-items: start; }
   figure.phf { margin: 0; display: flex; flex-direction: column; gap: 7px; }
   figure.phf a { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; border: 1px solid var(--line); }
   figure.phf img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.2s ease; }
   figure.phf a:hover img { transform: scale(1.03); }
-  figure.phf figcaption { font-size: 0.74rem; color: var(--muted); line-height: 1.45; }
+  figure.phf figcaption { font-size: 0.82rem; color: var(--muted); line-height: 1.45; }
 
   /* Teaching */
   .courses { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
@@ -253,7 +254,7 @@
     .pi .portrait { max-width: 160px; }
     .pub { grid-template-columns: 56px 1fr; gap: 14px; }
     section { padding: 52px 0; }
-    .hero .inner { padding-top: 64px; padding-bottom: 52px; }
+    .hero .inner { padding-top: 40px; padding-bottom: 32px; }
     .navbar { padding-bottom: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -294,18 +295,6 @@
         <a class="btn ghost" href="#publications">Publications</a>
       </div>
     </div>
-    <div class="statbar">
-      <div class="wrap" style="padding-top:0;padding-bottom:0;">
-        <div class="stats">
-          <div class="stat"><b>21</b><span>SCIE journal articles</span></div>
-          <div class="stat"><b>2024</b><span>NRF Young Investigator Award</span></div>
-        </div>
-        <div class="venues">
-          <span class="mono vlabel">As published in</span>
-          <span class="vnames">Physical Review X&ensp;·&ensp;Physical Review Applied&ensp;·&ensp;IEEE Trans. Antennas Propag.&ensp;·&ensp;Optica&ensp;·&ensp;Optics Express</span>
-        </div>
-      </div>
-    </div>
   </div>
 
   <section>
@@ -323,7 +312,7 @@
         </div>
         <div class="nitem">
           <span class="mono date">2026 · 06 · 11</span>
-          <p><b>Seokjun Kim</b> and <b>Haneul Yoo</b>'s work integrating nonlocal THz metasurfaces into a leaky-wave antenna architecture — addressing gain reduction during beam steering — is accepted to <b>Physical Review Applied</b>.</p>
+          <p><b>Seokjun Kim</b> and <b>Haneul Ryu</b>'s work integrating nonlocal THz metasurfaces into a leaky-wave antenna architecture — addressing gain reduction during beam steering — is accepted to <b>Physical Review Applied</b>.</p>
         </div>
         <div class="nitem">
           <span class="mono date">2026 · 06 · 03</span>
@@ -415,15 +404,8 @@
           <div class="pub">
             <div class="yr">2026</div>
             <div>
-              <h3>Guided-mode-excited non-local metasurfaces: engineering angular response for stable beam-steering in terahertz leaky-wave antennas</h3>
-              <div class="meta">S. Kim, H. Yoo, and M. Kim* — <span class="venue">Physical Review Applied</span><span class="tag">Accepted</span></div>
-            </div>
-          </div>
-          <div class="pub">
-            <div class="yr">2026</div>
-            <div>
               <h3>Dual-band nonlocal reconfigurable intelligent surfaces for precise full half-space beam shaping</h3>
-              <div class="meta">M. Kim and M. Kim* — <span class="venue">IEEE Trans. Antennas Propag.</span><span class="tag">Under revision</span></div>
+              <div class="meta">M. Kim and M. Kim* — <span class="venue">IEEE Trans. Antennas Propag.</span><span class="tag">Accepted</span></div>
             </div>
           </div>
           <div class="pub">
@@ -439,6 +421,13 @@
       <div class="pub-group">
         <h3 class="gtitle">Journal articles</h3>
         <div class="plist">
+          <div class="pub">
+            <div class="yr">2026</div>
+            <div>
+              <h3>Guided-mode-excited nonlocal metasurfaces: engineering angular response for stable beam steering in terahertz leaky-wave antennas</h3>
+              <div class="meta">S. Kim, H. Ryu, and M. Kim* — <span class="venue">Physical Review Applied</span> 26, 014071, Jul. 2026</div>
+            </div>
+          </div>
           <div class="pub">
             <div class="yr">2025</div>
             <div>
@@ -655,13 +644,26 @@
         <div>
           <h3>Minseok Kim</h3>
           <div class="role">Principal Investigator · Assistant Professor</div>
-          <p style="margin:0;color:var(--muted);font-size:0.95rem;max-width:44em;">School of Electronic and Electrical Engineering, Hongik University. Ph.D., M.A.Sc., and B.A.Sc. in Electrical Engineering, University of Toronto.</p>
-          <ul class="facts">
-            <li><b>2023–</b> Assistant Professor, Hongik University</li>
-            <li><b>2021–2023</b> Assistant Professor, University of North Dakota</li>
-            <li><b>2019–2021</b> Postdoctoral Fellow, University of Toronto</li>
-            <li><b>Office</b> P-dong #614 · minseok.kim@hongik.ac.kr</li>
-          </ul>
+          <p style="margin:0;color:var(--muted);font-size:0.95rem;max-width:44em;">School of Electronic and Electrical Engineering, Hongik University.</p>
+          <div class="pi-cols">
+            <div>
+              <h4>Education</h4>
+              <ul class="facts">
+                <li><b>Ph.D.</b> Electrical Engineering, University of Toronto</li>
+                <li><b>M.A.Sc.</b> Electrical Engineering, University of Toronto</li>
+                <li><b>B.A.Sc.</b> Electrical Engineering, University of Toronto</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Experience</h4>
+              <ul class="facts">
+                <li><b>2023–</b> Assistant Professor, Hongik University</li>
+                <li><b>2021–2023</b> Assistant Professor, University of North Dakota</li>
+                <li><b>2019–2021</b> Postdoctoral Fellow, University of Toronto</li>
+              </ul>
+            </div>
+          </div>
+          <p class="pi-office">Office: P-dong #614 · minseok.kim@hongik.ac.kr</p>
         </div>
       </div>
       <div class="members">
@@ -690,8 +692,8 @@
           <div><h4>Geun-Yung Jeon</h4><span class="deg">M.S. CANDIDATE</span><p>Deep-learning-based radiation-pattern synthesis, nonlocal metasurfaces</p></div>
         </div>
         <div class="member">
-          <img class="avatar" src="img/team-haneul-yoo.jpg" alt="Haneul Yoo">
-          <div><h4>Haneul Yoo</h4><span class="deg">M.S. CANDIDATE</span><p>THz leaky-wave antennas, nonlocal metasurfaces, nonlinear optics</p></div>
+          <img class="avatar" src="img/team-haneul-ryu.jpg" alt="Haneul Ryu">
+          <div><h4>Haneul Ryu</h4><span class="deg">M.S. CANDIDATE</span><p>THz leaky-wave antennas, nonlocal metasurfaces, nonlinear optics</p></div>
         </div>
         <div class="member">
           <img class="avatar" src="img/team-dongyun-yoon.jpg" alt="Dongyun Yoon">
@@ -1003,17 +1005,17 @@
       </div>
 
       <div class="album">
-        <div class="ahead"><h3>Tico</h3><span class="mono where">Lab Mascot</span></div>
+        <div class="ahead"><h3>Tiko</h3><span class="mono where">Lab Mascot</span></div>
         <p class="cap">Chief morale officer.</p>
         <div class="pgrid">
           <figure class="phf">
-            <a href="photos/tico-01.jpg" target="_blank" rel="noopener"><img src="photos/tico-01.jpg" alt="Tico photo 1" loading="lazy"></a>
+            <a href="photos/tico-01.jpg" target="_blank" rel="noopener"><img src="photos/tico-01.jpg" alt="Tiko photo 1" loading="lazy"></a>
           </figure>
           <figure class="phf">
-            <a href="photos/tico-02.jpg" target="_blank" rel="noopener"><img src="photos/tico-02.jpg" alt="Tico photo 2" loading="lazy"></a>
+            <a href="photos/tico-02.jpg" target="_blank" rel="noopener"><img src="photos/tico-02.jpg" alt="Tiko photo 2" loading="lazy"></a>
           </figure>
           <figure class="phf">
-            <a href="photos/tico-03.jpg" target="_blank" rel="noopener"><img src="photos/tico-03.jpg" alt="Tico photo 3" loading="lazy"></a>
+            <a href="photos/tico-03.jpg" target="_blank" rel="noopener"><img src="photos/tico-03.jpg" alt="Tiko photo 3" loading="lazy"></a>
           </figure>
         </div>
       </div>
