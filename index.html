@@ -8,34 +8,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root {
-    --paper: #FBFCFC;
-    --ink: #182530;
-    --muted: #56676F;
-    --line: #DDE5E7;
-    --card: #F2F6F6;
-    --accent: #0B7C8C;
-    --accent-soft: rgba(11,124,140,0.09);
-    --copper: #A9663B;
-    --wave: rgba(24,37,48,0.14);
-    --wave-strong: rgba(11,124,140,0.55);
-    --shadow: 0 1px 2px rgba(24,37,48,0.05), 0 8px 24px rgba(24,37,48,0.06);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #0E1922;
-      --ink: #E6EDF0;
-      --muted: #93A6B0;
-      --line: #223440;
-      --card: #131F2A;
-      --accent: #41B9CA;
-      --accent-soft: rgba(65,185,202,0.12);
-      --copper: #D6926A;
-      --wave: rgba(230,237,240,0.12);
-      --wave-strong: rgba(65,185,202,0.6);
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
-    }
-  }
-  :root[data-theme="dark"] {
     --paper: #0E1922;
     --ink: #E6EDF0;
     --muted: #93A6B0;
@@ -121,7 +93,7 @@
     display: inline-block; padding: 11px 22px; border-radius: 4px;
     font-weight: 600; font-size: 0.92rem; border: 1px solid transparent; cursor: pointer;
   }
-  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary { background: var(--accent); color: #0E1922; }
   .btn.primary:hover { text-decoration: none; filter: brightness(1.08); }
   .btn.ghost { border-color: var(--line); color: var(--ink); background: color-mix(in srgb, var(--paper) 70%, transparent); }
   .btn.ghost:hover { text-decoration: none; border-color: var(--accent); color: var(--accent); }
@@ -162,6 +134,12 @@
     transition: border-color 0.2s ease;
   }
   .rcard:hover { border-color: var(--accent); }
+  .rcard .rimg {
+    aspect-ratio: 16 / 10; overflow: hidden; border-radius: 4px;
+    background: #FFFFFF; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rcard .rimg img { width: 100%; height: 100%; object-fit: contain; display: block; padding: 6px; box-sizing: border-box; }
   .rcard .band { color: var(--copper); }
   .rcard h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.18rem; font-weight: 600; margin: 0; line-height: 1.3; }
   .rcard p { margin: 0; color: var(--muted); font-size: 0.92rem; }
@@ -205,11 +183,11 @@
     padding: 32px; margin-bottom: 26px;
   }
   .pi .portrait {
-    aspect-ratio: 1; border-radius: 6px; background: var(--accent-soft);
-    display: flex; align-items: center; justify-content: center;
-    font-family: "STIX Two Text", Georgia, serif; font-size: 3rem; font-weight: 700; color: var(--accent);
-    border: 1px solid var(--line);
+    aspect-ratio: 3 / 4; border-radius: 6px; background: var(--accent-soft);
+    overflow: hidden; border: 1px solid var(--line);
   }
+  .pi .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .member img.avatar { object-fit: cover; border: 1px solid var(--line); }
   .pi h3 { font-family: "STIX Two Text", Georgia, serif; font-size: 1.5rem; font-weight: 600; margin: 0 0 2px; }
   .pi .role { color: var(--accent); font-weight: 600; font-size: 0.92rem; margin-bottom: 14px; }
   .pi .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 6px 28px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 0.9rem; color: var(--muted); }
@@ -237,19 +215,12 @@
   .album .where { color: var(--muted); }
   .album .cap { color: var(--muted); font-size: 0.88rem; margin: 0 0 16px; max-width: 52em; }
   .album .cap b { color: var(--ink); font-weight: 600; }
-  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-  .ph {
-    aspect-ratio: 4 / 3; border-radius: 4px;
-    border: 1px dashed var(--line);
-    background: repeating-linear-gradient(45deg, var(--card), var(--card) 9px, var(--paper) 9px, var(--paper) 18px);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted);
-  }
-  .ph.more { border-style: solid; background: var(--card); font-family: "STIX Two Text", Georgia, serif; font-size: 1.2rem; font-weight: 600; }
-  .ph-note {
-    margin-top: 34px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 6px;
-    background: var(--accent-soft); color: var(--muted); font-size: 0.86rem;
-  }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px 14px; align-items: start; }
+  figure.phf { margin: 0; display: flex; flex-direction: column; gap: 7px; }
+  figure.phf a { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; border: 1px solid var(--line); }
+  figure.phf img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.2s ease; }
+  figure.phf a:hover img { transform: scale(1.03); }
+  figure.phf figcaption { font-size: 0.74rem; color: var(--muted); line-height: 1.45; }
 
   /* Teaching */
   .courses { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
@@ -392,29 +363,34 @@
       </div>
       <div class="rgrid">
         <div class="rcard">
-          <span class="mono band">Multi-band · RIS</span>
-          <h3>Nonlocal multi-band reconfigurable intelligent surfaces</h3>
-          <p>Frequency-selective structures interleaved on a single thin surface manipulate signals across multiple bands simultaneously — deliberately exploiting mutual coupling among unit cells as a design element for full half-space beam shaping.</p>
+          <span class="mono band">Wave physics</span>
+          <div class="rimg"><img src="img/research-nonlocal.jpg" alt="Nonlocal and spatially-dispersive metasurfaces" loading="lazy"></div>
+          <h3>Nonlocal and spatially-dispersive metasurfaces</h3>
+          <p>Most metasurfaces are designed cell by cell, treating coupling between neighboring elements as a nuisance. We take the opposite view. By deliberately engineering nonlocality — the collective response of many coupled cells — we access functionalities that local designs cannot reach, including angle-selective responses and extreme wave transformations.</p>
         </div>
         <div class="rcard">
-          <span class="mono band">Microwave · 6G</span>
-          <h3>Cavity-excited nonlocal metasurface antennas</h3>
-          <p>Resonant fields confined within a cavity excite a metasurface aperture directly, eliminating extensive feed networks while maintaining directive radiation — a compact, power-efficient platform for 6G front ends.</p>
+          <span class="mono band">6G · Smart environments</span>
+          <div class="rimg"><img src="img/research-ris.jpg" alt="Reconfigurable intelligent surfaces" loading="lazy"></div>
+          <h3>Reconfigurable intelligent surfaces</h3>
+          <p>Reconfigurable intelligent surfaces turn ordinary walls and facades into programmable radio mirrors that route wireless signals on demand. We study how such surfaces can shape entire communication channels — across multiple frequency bands and polarizations — to extend coverage and capacity in next-generation networks.</p>
         </div>
         <div class="rcard">
-          <span class="mono band">mm-wave · Radar</span>
-          <h3>Spatially-dispersive metasurfaces and metagratings</h3>
-          <p>Sparsely distributed metallic scatterers with wavelength-scale spacing yield angle-selective wave manipulation, targeting automotive radar and 6G links where the angular response is the specification.</p>
+          <span class="mono band">Antennas · Microwave</span>
+          <div class="rimg"><img src="img/research-cavity.jpg" alt="Metasurface antennas" loading="lazy"></div>
+          <h3>Metasurface antennas</h3>
+          <p>Metasurfaces enable antennas that are thin, light, and free of the bulky feed networks behind conventional phased arrays. We develop aperture architectures that radiate directly from guided and cavity modes, aiming at low-cost, power-efficient front ends for communications and sensing.</p>
         </div>
         <div class="rcard">
           <span class="mono band">THz</span>
-          <h3>Nonlocal metasurface-aided THz leaky-wave antennas</h3>
-          <p>Metasurfaces that remain robust over a broad range of incidence angles enable efficient, stable beam steering at terahertz frequencies — including simultaneous generation and manipulation of THz waves via nonlinear optics.</p>
+          <div class="rimg"><img src="img/research-thz.jpg" alt="Terahertz wave engineering" loading="lazy"></div>
+          <h3>Terahertz wave engineering</h3>
+          <p>The terahertz band promises ultra-broadband links and fine-grained sensing, but generating and steering THz waves efficiently remains a challenge. We combine metasurfaces, leaky-wave antennas, and nonlinear optics to generate, radiate, and steer terahertz beams within a single integrated platform.</p>
         </div>
         <div class="rcard">
           <span class="mono band">Computational</span>
-          <h3>Deep-learning-assisted inverse design</h3>
-          <p>Physics-aware inverse-design frameworks that explicitly account for mutual coupling accelerate metasurface synthesis, closing the loop between full-wave physics and AI-driven optimization.</p>
+          <div class="rimg"><img src="img/research-ai.jpg" alt="Computational and AI-assisted design" loading="lazy"></div>
+          <h3>Computational and AI-assisted design</h3>
+          <p>As metasurface apertures grow in scale and complexity, brute-force simulation becomes the bottleneck. We build physics-aware modeling and inverse-design frameworks — from integral-equation methods to deep learning — that make large, strongly coupled apertures tractable.</p>
         </div>
       </div>
     </div>
@@ -675,7 +651,7 @@
         </div>
       </div>
       <div class="pi">
-        <div class="portrait">MK</div>
+        <div class="portrait"><img src="img/team-minseok-kim.jpg" alt="Minseok Kim"></div>
         <div>
           <h3>Minseok Kim</h3>
           <div class="role">Principal Investigator · Assistant Professor</div>
@@ -690,35 +666,35 @@
       </div>
       <div class="members">
         <div class="member">
-          <div class="avatar">SC</div>
+          <img class="avatar" src="img/team-sambong-chang.jpg" alt="Sambong Chang">
           <div><h4>Sambong Chang</h4><span class="deg">PH.D. CANDIDATE</span><p>Bianisotropic metasurfaces, nonlocal metasurfaces</p></div>
         </div>
         <div class="member">
-          <div class="avatar">MK</div>
+          <img class="avatar" src="img/team-moosung-kim.jpg" alt="Moosung Kim">
           <div><h4>Moosung Kim</h4><span class="deg">M.S.–PH.D. JOINT</span><p>Reconfigurable intelligent surfaces, space-time-coding metasurfaces</p></div>
         </div>
         <div class="member">
-          <div class="avatar">MC</div>
+          <img class="avatar" src="img/team-minwoo-cho.jpg" alt="Minwoo Cho">
           <div><h4>Minwoo Cho</h4><span class="deg">M.S.–PH.D. JOINT</span><p>Tunable metasurfaces, nonlocal metasurfaces</p></div>
         </div>
         <div class="member">
-          <div class="avatar">JK</div>
+          <img class="avatar" src="img/team-jinyong-kim.jpg" alt="Jinyong Kim">
           <div><h4>Jinyong Kim</h4><span class="deg">M.S.–PH.D. JOINT</span><p>Spatially-dispersive metasurfaces, multifunctional metasurfaces</p></div>
         </div>
         <div class="member">
-          <div class="avatar">SK</div>
+          <img class="avatar" src="img/team-seokjun-kim.jpg" alt="Seokjun Kim">
           <div><h4>Seokjun Kim</h4><span class="deg">M.S.–PH.D. JOINT</span><p>THz leaky-wave antennas, nonlocal metasurfaces, nonlinear optics</p></div>
         </div>
         <div class="member">
-          <div class="avatar">GJ</div>
+          <img class="avatar" src="img/team-geunyung-jeon.jpg" alt="Geun-Yung Jeon">
           <div><h4>Geun-Yung Jeon</h4><span class="deg">M.S. CANDIDATE</span><p>Deep-learning-based radiation-pattern synthesis, nonlocal metasurfaces</p></div>
         </div>
         <div class="member">
-          <div class="avatar">HY</div>
+          <img class="avatar" src="img/team-haneul-yoo.jpg" alt="Haneul Yoo">
           <div><h4>Haneul Yoo</h4><span class="deg">M.S. CANDIDATE</span><p>THz leaky-wave antennas, nonlocal metasurfaces, nonlinear optics</p></div>
         </div>
         <div class="member">
-          <div class="avatar">DY</div>
+          <img class="avatar" src="img/team-dongyun-yoon.jpg" alt="Dongyun Yoon">
           <div><h4>Dongyun Yoon</h4><span class="deg">UNDERGRADUATE RA</span><p>Metasurface antennas</p></div>
         </div>
       </div>
@@ -740,25 +716,148 @@
 
       <div class="album">
         <div class="ahead"><h3>IEEE AP-S/URSI 2026</h3><span class="mono where">Detroit, USA · Jul 2026</span></div>
-        <p class="cap"><b>Minwoo Cho</b> — Industry Application Pitch Competition Top-10 Finalist. <b>Jinyong Kim</b> — Student Paper Competition Honorable Mention. 판사님, 저희는 구경만 하였습니다.</p>
+        <p class="cap"><b>Minwoo Cho</b> — Industry Application Pitch Competition Top-10 Finalist. <b>Jinyong Kim</b> — Student Paper Competition Honorable Mention.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+5</div>
+          <figure class="phf">
+            <a href="photos/aps2026-01.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-01.jpg" alt="IEEE AP-S/URSI 2026 photo 1" loading="lazy"></a>
+            <figcaption>이번 AP-S에서도 아주 멋진 발표를 해준 무성학생</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-02.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-02.jpg" alt="IEEE AP-S/URSI 2026 photo 2" loading="lazy"></a>
+            <figcaption>학회장에서의 우리</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-03.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-03.jpg" alt="IEEE AP-S/URSI 2026 photo 3" loading="lazy"></a>
+            <figcaption>발표전 긴장한 무성이를 비웃는 진용이??</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-04.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-04.jpg" alt="IEEE AP-S/URSI 2026 photo 4" loading="lazy"></a>
+            <figcaption>IEEE AP-S Industry Pitch Competition 발표중인 민우</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-05.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-05.jpg" alt="IEEE AP-S/URSI 2026 photo 5" loading="lazy"></a>
+            <figcaption>진용이의 Metagrating 관련 멋진 발표!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-06.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-06.jpg" alt="IEEE AP-S/URSI 2026 photo 6" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-07.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-07.jpg" alt="IEEE AP-S/URSI 2026 photo 7" loading="lazy"></a>
+            <figcaption>수상 중인 민우 (혼자 어디봐?)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-08.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-08.jpg" alt="IEEE AP-S/URSI 2026 photo 8" loading="lazy"></a>
+            <figcaption>발표 후 질문을 받은 진용이 (질문이 마음에 들지않았던듯??)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-09.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-09.jpg" alt="IEEE AP-S/URSI 2026 photo 9" loading="lazy"></a>
+            <figcaption>IEEE AP-S President로 부터 축하받는 민우</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-10.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-10.jpg" alt="IEEE AP-S/URSI 2026 photo 10" loading="lazy"></a>
+            <figcaption>첫 국제학회라 많은 긴장을 했지만 멋진 발표해준 석준</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-11.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-11.jpg" alt="IEEE AP-S/URSI 2026 photo 11" loading="lazy"></a>
+            <figcaption>(판사님 저희는 구경만 하였습니다)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2026-12.jpg" target="_blank" rel="noopener"><img src="photos/aps2026-12.jpg" alt="IEEE AP-S/URSI 2026 photo 12" loading="lazy"></a>
+            <figcaption>(판사님 저희는 구경만 하였습니다)</figcaption>
+          </figure>
         </div>
       </div>
 
       <div class="album">
         <div class="ahead"><h3>KIEES Summer Conference 2026</h3><span class="mono where">Alpensia, PyeongChang</span></div>
-        <p class="cap">Student presentations across five papers.</p>
+        <p class="cap">Student presentations across five papers, and an excellent-paper award for <b>Dongyun Yoon</b>.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+1</div>
+          <figure class="phf">
+            <a href="photos/kiees-s2026-01.jpg" target="_blank" rel="noopener"><img src="photos/kiees-s2026-01.jpg" alt="KIEES Summer Conference 2026 photo 1" loading="lazy"></a>
+            <figcaption>AEL Gang!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-s2026-02.jpg" target="_blank" rel="noopener"><img src="photos/kiees-s2026-02.jpg" alt="KIEES Summer Conference 2026 photo 2" loading="lazy"></a>
+            <figcaption>특히 올해는 역대급으로 많은 150편의 논문이 발표되었고, 동연학생은 이 중 우수논문 수상까지...!!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-s2026-03.jpg" target="_blank" rel="noopener"><img src="photos/kiees-s2026-03.jpg" alt="KIEES Summer Conference 2026 photo 3" loading="lazy"></a>
+            <figcaption>우리 연구실과 공동연구를 수행중인 경희대학교 이응규 교수님 연구실 강석규 학생과 AEL의 김석준 학생</figcaption>
+          </figure>
         </div>
       </div>
 
       <div class="album">
         <div class="ahead"><h3>IEEE AP-S/URSI 2025</h3><span class="mono where">Ottawa, Canada</span></div>
-        <p class="cap">Presentations, group photos, and dormitory pasta.</p>
+        <p class="cap">Presentations, group photos, and dormitory pasta. Prof. G. V. Eleftheriades — Prof. Kim’s doctoral advisor — received the <b>2025 IEEE Electromagnetics Award</b>.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+7</div>
+          <figure class="phf">
+            <a href="photos/aps2025-01.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-01.jpg" alt="IEEE AP-S/URSI 2025 photo 1" loading="lazy"></a>
+            <figcaption>오타와 출발 전</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-02.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-02.jpg" alt="IEEE AP-S/URSI 2025 photo 2" loading="lazy"></a>
+            <figcaption>학회장에서의 우리들 (진용이 손내려)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-03.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-03.jpg" alt="IEEE AP-S/URSI 2025 photo 3" loading="lazy"></a>
+            <figcaption>숙소에서 스파게티 만드는 학생들</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-04.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-04.jpg" alt="IEEE AP-S/URSI 2025 photo 4" loading="lazy"></a>
+            <figcaption>꽤나 근사했던 오타와</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-05.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-05.jpg" alt="IEEE AP-S/URSI 2025 photo 5" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-06.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-06.jpg" alt="IEEE AP-S/URSI 2025 photo 6" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-07.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-07.jpg" alt="IEEE AP-S/URSI 2025 photo 7" loading="lazy"></a>
+            <figcaption>결과물. 겁나 맛없어 보임</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-08.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-08.jpg" alt="IEEE AP-S/URSI 2025 photo 8" loading="lazy"></a>
+            <figcaption>멋진 발표 해준 무성이</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-09.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-09.jpg" alt="IEEE AP-S/URSI 2025 photo 9" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-10.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-10.jpg" alt="IEEE AP-S/URSI 2025 photo 10" loading="lazy"></a>
+            <figcaption>내가 좀 더 잘했던듯</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-11.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-11.jpg" alt="IEEE AP-S/URSI 2025 photo 11" loading="lazy"></a>
+            <figcaption>가끔(?)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-12.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-12.jpg" alt="IEEE AP-S/URSI 2025 photo 12" loading="lazy"></a>
+            <figcaption>Hongik Gang</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-13.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-13.jpg" alt="IEEE AP-S/URSI 2025 photo 13" loading="lazy"></a>
+            <figcaption>국제학회에서 나홀로 한글 사랑 실천 중인 김무성 연구원</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-14.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-14.jpg" alt="IEEE AP-S/URSI 2025 photo 14" loading="lazy"></a>
+            <figcaption>Team Toronto Reunion</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-15.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-15.jpg" alt="IEEE AP-S/URSI 2025 photo 15" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-16.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-16.jpg" alt="IEEE AP-S/URSI 2025 photo 16" loading="lazy"></a>
+            <figcaption>교수님 IEEE Electromagnetics Award 수상 축하드립니다~!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-17.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-17.jpg" alt="IEEE AP-S/URSI 2025 photo 17" loading="lazy"></a>
+            <figcaption>우리 연구실에서 THz 분야를 담당 하고 있는 하늘, 석준 학생</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2025-18.jpg" target="_blank" rel="noopener"><img src="photos/aps2025-18.jpg" alt="IEEE AP-S/URSI 2025 photo 18" loading="lazy"></a>
+          </figure>
         </div>
       </div>
 
@@ -766,15 +865,68 @@
         <div class="ahead"><h3>EuCAP 2025</h3><span class="mono where">Stockholm, Sweden</span></div>
         <p class="cap">Conference sessions and a bit of Stockholm.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+3</div>
+          <figure class="phf">
+            <a href="photos/eucap2025-01.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-01.jpg" alt="EuCAP 2025 photo 1" loading="lazy"></a>
+            <figcaption>학회장 도착!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-02.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-02.jpg" alt="EuCAP 2025 photo 2" loading="lazy"></a>
+            <figcaption>생각 보다 훨씬 멋있었던 스톡홀름</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-03.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-03.jpg" alt="EuCAP 2025 photo 3" loading="lazy"></a>
+            <figcaption>서로 모르는 척</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-04.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-04.jpg" alt="EuCAP 2025 photo 4" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-05.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-05.jpg" alt="EuCAP 2025 photo 5" loading="lazy"></a>
+            <figcaption>나루토 보법</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-06.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-06.jpg" alt="EuCAP 2025 photo 6" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-07.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-07.jpg" alt="EuCAP 2025 photo 7" loading="lazy"></a>
+            <figcaption>노벨상 수상자들이 연회를 하는 곳에서</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-08.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-08.jpg" alt="EuCAP 2025 photo 8" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-09.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-09.jpg" alt="EuCAP 2025 photo 9" loading="lazy"></a>
+            <figcaption>멋있었던 배</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/eucap2025-10.jpg" target="_blank" rel="noopener"><img src="photos/eucap2025-10.jpg" alt="EuCAP 2025 photo 10" loading="lazy"></a>
+          </figure>
         </div>
       </div>
 
       <div class="album">
         <div class="ahead"><h3>KIEES Winter Conference 2025</h3><span class="mono where">ICC Jeju</span></div>
-        <p class="cap">Award ceremony and a lab bowling night.</p>
+        <p class="cap"><b>Geun-Yung Jeon</b> — Best Undergraduate Poster Paper Award. Plus a lab bowling night.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+3</div>
+          <figure class="phf">
+            <a href="photos/kiees-w2025-01.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2025-01.jpg" alt="KIEES Winter Conference 2025 photo 1" loading="lazy"></a>
+            <figcaption>우리 존재 화이팅!!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2025-02.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2025-02.jpg" alt="KIEES Winter Conference 2025 photo 2" loading="lazy"></a>
+            <figcaption>볼링 나잇</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2025-03.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2025-03.jpg" alt="KIEES Winter Conference 2025 photo 3" loading="lazy"></a>
+            <figcaption>커여운 학생들</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2025-04.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2025-04.jpg" alt="KIEES Winter Conference 2025 photo 4" loading="lazy"></a>
+            <figcaption>부족한 저희에게 큰상 주셨습니다... 심사위원 교수님들 정말 대단히 감사드립니다...!!</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2025-05.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2025-05.jpg" alt="KIEES Winter Conference 2025 photo 5" loading="lazy"></a>
+          </figure>
         </div>
       </div>
 
@@ -782,15 +934,41 @@
         <div class="ahead"><h3>IEEE AP-S/URSI 2024</h3><span class="mono where">Florence, Italy</span></div>
         <p class="cap">Reunions with former advisors, and the Duomo.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div>
+          <figure class="phf">
+            <a href="photos/aps2024-01.jpg" target="_blank" rel="noopener"><img src="photos/aps2024-01.jpg" alt="IEEE AP-S/URSI 2024 photo 1" loading="lazy"></a>
+            <figcaption>옛 지도 교수님과...</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2024-02.jpg" target="_blank" rel="noopener"><img src="photos/aps2024-02.jpg" alt="IEEE AP-S/URSI 2024 photo 2" loading="lazy"></a>
+            <figcaption>옛 랩메이트들과 오랜만의 만남</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2024-03.jpg" target="_blank" rel="noopener"><img src="photos/aps2024-03.jpg" alt="IEEE AP-S/URSI 2024 photo 3" loading="lazy"></a>
+            <figcaption>길가다가 만난 이정해 교수님 학생들..</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/aps2024-04.jpg" target="_blank" rel="noopener"><img src="photos/aps2024-04.jpg" alt="IEEE AP-S/URSI 2024 photo 4" loading="lazy"></a>
+            <figcaption>멋있었던 두오모 성당</figcaption>
+          </figure>
         </div>
       </div>
 
       <div class="album">
         <div class="ahead"><h3>KIEES Summer Conference 2024</h3><span class="mono where">PyeongChang</span></div>
-        <p class="cap">Presentation snapshots.</p>
+        <p class="cap">Poster presentations.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div>
+          <figure class="phf">
+            <a href="photos/kiees-s2024-01.jpg" target="_blank" rel="noopener"><img src="photos/kiees-s2024-01.jpg" alt="KIEES Summer Conference 2024 photo 1" loading="lazy"></a>
+            <figcaption>올 하계 학술대회 장소 (평창 알펜시아 리조트)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-s2024-02.jpg" target="_blank" rel="noopener"><img src="photos/kiees-s2024-02.jpg" alt="KIEES Summer Conference 2024 photo 2" loading="lazy"></a>
+            <figcaption>김무성, 전근영 논문 발표</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-s2024-03.jpg" target="_blank" rel="noopener"><img src="photos/kiees-s2024-03.jpg" alt="KIEES Summer Conference 2024 photo 3" loading="lazy"></a>
+            <figcaption>유하늘 논문 발표 (우수논문 수상!)</figcaption>
+          </figure>
         </div>
       </div>
 
@@ -798,7 +976,29 @@
         <div class="ahead"><h3>KIEES Winter Conference 2024</h3><span class="mono where">Jeju</span></div>
         <p class="cap">Sessions and social hours.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph more">+1</div>
+          <figure class="phf">
+            <a href="photos/kiees-w2024-01.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2024-01.jpg" alt="KIEES Winter Conference 2024 photo 1" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2024-02.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2024-02.jpg" alt="KIEES Winter Conference 2024 photo 2" loading="lazy"></a>
+            <figcaption>이중섭 생가에서...</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2024-03.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2024-03.jpg" alt="KIEES Winter Conference 2024 photo 3" loading="lazy"></a>
+            <figcaption>이중섭 생가에서...</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2024-04.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2024-04.jpg" alt="KIEES Winter Conference 2024 photo 4" loading="lazy"></a>
+            <figcaption>이정해 교수님 학생분들과 AEL 학부연구생 (중섭의카페에서..)</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2024-05.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2024-05.jpg" alt="KIEES Winter Conference 2024 photo 5" loading="lazy"></a>
+            <figcaption>너희들은 편한곳에 앉아..... 난 익듁하니께...</figcaption>
+          </figure>
+          <figure class="phf">
+            <a href="photos/kiees-w2024-06.jpg" target="_blank" rel="noopener"><img src="photos/kiees-w2024-06.jpg" alt="KIEES Winter Conference 2024 photo 6" loading="lazy"></a>
+            <figcaption>너희들은 편한곳에 앉아..... 난 익듁하니께...</figcaption>
+          </figure>
         </div>
       </div>
 
@@ -806,11 +1006,18 @@
         <div class="ahead"><h3>Tico</h3><span class="mono where">Lab Mascot</span></div>
         <p class="cap">Chief morale officer.</p>
         <div class="pgrid">
-          <div class="ph mono">Photo</div><div class="ph mono">Photo</div><div class="ph mono">Photo</div>
+          <figure class="phf">
+            <a href="photos/tico-01.jpg" target="_blank" rel="noopener"><img src="photos/tico-01.jpg" alt="Tico photo 1" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/tico-02.jpg" target="_blank" rel="noopener"><img src="photos/tico-02.jpg" alt="Tico photo 2" loading="lazy"></a>
+          </figure>
+          <figure class="phf">
+            <a href="photos/tico-03.jpg" target="_blank" rel="noopener"><img src="photos/tico-03.jpg" alt="Tico photo 3" loading="lazy"></a>
+          </figure>
         </div>
       </div>
 
-      <div class="ph-note">Our photo albums are being migrated to this page. In the meantime, the full collection is available on our <a href="https://sites.google.com/hongik.ac.kr/ael/photos" target="_blank" rel="noopener">previous site</a>.</div>
     </div>
   </section>
 </main>

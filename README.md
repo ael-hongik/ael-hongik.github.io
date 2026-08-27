@@ -18,6 +18,6 @@
 - **뉴스 추가**: `<!-- ================= HOME` 아래 `<div class="news">` 안에 기존 `<div class="nitem">...</div>` 블록을 복사해 맨 위에 붙여넣고 날짜·내용만 교체
 - **논문 추가**: `<!-- ================= PUBLICATIONS` 아래 해당 그룹(`Journal articles` / `Conference proceedings`)의 `<div class="pub">...</div>` 블록 복사 후 수정
 - **멤버 추가**: `<!-- ================= TEAM` 아래 `<div class="member">...</div>` 블록 복사 후 수정
-- **사진 교체**: Photos 탭의 `<div class="ph mono">Photo</div>` 타일을 `<img src="photos/파일명.jpg" alt="설명">` 으로 교체하고, 저장소에 `photos/` 폴더를 만들어 이미지 업로드
+- **사진 추가/교체**: 이미지를 `photos/` 폴더에 업로드한 뒤, Photos 탭의 해당 앨범 `<div class="pgrid">` 안에 기존 `<a class="phl">...</a>` 블록을 복사해 파일명만 바꿔 추가. 현재 사진은 구 사이트 화면 캡처본이므로, 고화질 원본으로 같은 파일명으로 덮어쓰면 화질이 개선됨
 
 수정이 번거로우면 이 파일과 함께 Claude에게 요청하면 됩니다.
